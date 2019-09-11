@@ -1,7 +1,7 @@
 .main {
   display: grid;
   grid-template-columns: 100%;
-  background-color: rgb(38, 42, 51);
+  /* background-color: rgb(38, 42, 51); */
   min-height: 100vh;
 }
 

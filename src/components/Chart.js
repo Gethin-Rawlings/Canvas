@@ -4,6 +4,8 @@ import {
 
 } from 'recharts';
 
+import { Rnd } from 'react-rnd';
+
 const data = [
   {
     name: 'Paul', opened: 4000, closed: 2400, amt: 2400,
@@ -30,6 +32,13 @@ const data = [
 
 function Charts(props) {
     return (
+      <Rnd   default={{
+        x: 0,
+        y: 0,
+        width: 500,
+        height: 250,
+      }}
+    >
         <ResponsiveContainer aspect={2.0} className = 'chart1' >
           <BarChart 
             width={500}
@@ -48,7 +57,14 @@ function Charts(props) {
            
           </BarChart>
         </ResponsiveContainer>
+      </Rnd>
       );
     }
 
 export default Charts
+
+
+
+
+//   Rnd
+// </Rnd>
