@@ -1,6 +1,7 @@
 import React from 'react';
 import Charts from './components/Chart';
 import ChartRe from './components/ReCharts';
+import CallsPerHour from './components/CallsPerHour';
 import './App.css';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <div className = 'chartArea'>
         <Charts url={url+openCallsUrl} />
         <ChartRe />
+        <CallsPerHour />
       </div> 
     </div>
   )
