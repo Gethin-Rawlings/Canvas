@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-   XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, LabelList
+   XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, LabelList, Cell
+
 
 } from 'recharts';
 import { Rnd } from 'react-rnd';
@@ -30,13 +31,7 @@ const data = [
 
 function ChartsRe(props) {
     return (
-      <Rnd   default={{
-        x: 0,
-        y: 0,
-        width: 500,
-        height: 250,
-      }}
-    >
+      <Rnd default={props.default}>
         <ResponsiveContainer aspect={2.0} className = 'chart2' >
           <BarChart 
             width={490}
@@ -51,6 +46,9 @@ function ChartsRe(props) {
             <Tooltip />
             {/* <Legend /> */}
             <Bar dataKey="opened" fill="#8884d8"  maxBarSize={15} >
+            {data.map((entry, index) => (
+            <Cell fill={entry.opened > 40 ? '#ff0000' : '#8884d8' }/>
+            ))}
             <LabelList dataKey="opened" position="inside" />
             </Bar>
             {/* <Bar dataKey="closed" fill="#82ca9d" /> */}
@@ -60,5 +58,7 @@ function ChartsRe(props) {
         </Rnd>
       );
     }
+    
+    // ff0000
 
 export default ChartsRe

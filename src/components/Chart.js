@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-   XAxis, YAxis,  Tooltip, Legend, ResponsiveContainer, BarChart, Bar, LabelList
+   XAxis, YAxis,  Tooltip, ResponsiveContainer, BarChart, Bar,
 
 } from 'recharts';
 
@@ -55,15 +55,9 @@ const data = [
   
 ];
 
-function Charts(props) {
+function Chart(props) {
     return (
-      <Rnd   default={{
-        x: 0,
-        y: 0,
-        width: 500,
-        height: 250,
-      }}
-    >
+      <Rnd default={props.default}>
         <ResponsiveContainer aspect={2.0} className = 'chart1' >
           <BarChart 
             width={495}
@@ -90,7 +84,7 @@ function Charts(props) {
       );
     }
 
-export default Charts
+export default Chart
 
 
 

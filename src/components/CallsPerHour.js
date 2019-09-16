@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect }  from 'react';
 import {
    XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, LabelList
 
@@ -29,32 +29,32 @@ const data = [
 ];
 
 function CallsPerHour(props) {
+
+    useEffect( ()=> {
+      console.log(props.default)
+
+    },[props.default]);
+
     return (
-      <Rnd   default={{
-        x: 0,
-        y: 0,
-        width: 500,
-        height: 250,
-      }}
-    >
+      <Rnd default={props.default}
+      onDragStop={(e, d) => { props.setChart({ x: d.x, y: d.y })}}
+      onResizeStop={(e, direction, ref, delta, position) => {
+        props.setChart({
+          width: ref.style.width,
+          height: ref.style.height,
+          ...position,
+        });
+      }}>
         <ResponsiveContainer aspect={2.0} className = 'chart2' >
           <BarChart 
-            width={490}
-            height={500}
-            // layout={'horizontal'}
-            // layout={'vertical'}
             data={data}
             margin={{top: 15, right: 15, left: 15, bottom: 15,}}>
-            {/* <CartesianGrid strokeDasharray="3 3" /> */}
             <XAxis dataKey="name" type="category"/>
             <YAxis type="number" />
             <Tooltip />
-            {/* <Legend /> */}
             <Bar dataKey="opened" fill="#ffff80" maxBarSize={15} >
             <LabelList dataKey="opened" position="inside" />
             </Bar>
-            {/* <Bar dataKey="closed" fill="#82ca9d" /> */}
-           
           </BarChart>
         </ResponsiveContainer>
         </Rnd>
