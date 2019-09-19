@@ -4,6 +4,9 @@ import {
 
 } from 'recharts';
 import { Rnd } from 'react-rnd';
+
+import { postChartConfig } from './apiCalls';
+
 const data = [
   {
     name: '09:00', opened: 12, closed: 2400, amt: 2400,
@@ -31,14 +34,39 @@ const data = [
 function CallsPerHour(props) {
 
     useEffect( ()=> {
-      console.log(props.default)
+      const postConfig = async(config) => {
+        try {
+          if (props.compare != config) {
+            console.log(config);
+            console.log(props.compare)
+            config.chart='callsPerHour';
+            
+            await postChartConfig('http://localhost:5000/chartConfig',config)
+          }
+          
+        } catch(error){console.log(error)}
+      }
+      postConfig(props.default)
 
     },[props.default]);
 
+     // useEffect( ()=>{
+  //   const getData = async() =>  {
+  //     try {
+  //       const data = await getChartData(props.url)
+  //       setCalls(data)
+  //     } catch (error) {setRequestFailed(true)
+  //     }
+  //   }
+  //   getData();
+  // })
+
     return (
       <Rnd default={props.default}
-      onDragStop={(e, d) => { props.setChart({ x: d.x, y: d.y })}}
+      onDragStop={(e, d) => { e.preventDefault(); props.setChart({ x: d.x, y: d.y, 
+        width: d.node.clientWidth, height: d.node.clientHeight})}}
       onResizeStop={(e, direction, ref, delta, position) => {
+        e.preventDefault();
         props.setChart({
           width: ref.style.width,
           height: ref.style.height,
@@ -53,7 +81,7 @@ function CallsPerHour(props) {
             <YAxis type="number" />
             <Tooltip />
             <Bar dataKey="opened" fill="#ffff80" maxBarSize={15} >
-            <LabelList dataKey="opened" position="inside" />
+            <LabelList dataKey="opened" position="inside"  className='white'/>
             </Bar>
           </BarChart>
         </ResponsiveContainer>

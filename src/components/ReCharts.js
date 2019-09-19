@@ -49,7 +49,7 @@ function ChartsRe(props) {
             {data.map((entry, index) => (
             <Cell fill={entry.opened > 40 ? '#ff0000' : '#8884d8' }/>
             ))}
-            <LabelList dataKey="opened" position="inside" />
+            <LabelList dataKey="opened" position="inside" fill='#000000' />
             </Bar>
             {/* <Bar dataKey="closed" fill="#82ca9d" /> */}
            
