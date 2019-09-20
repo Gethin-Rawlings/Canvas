@@ -38,3 +38,9 @@
 
   color: white;
 }
+
+.largeNumber {
+  font-size: 50px;
+  background-color: rgb(38, 42, 51);
+    color: white;
+}

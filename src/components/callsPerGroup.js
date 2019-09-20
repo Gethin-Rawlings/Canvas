@@ -47,14 +47,13 @@ function CallsPerGroup() {
               config.height=size.height;
               config.x=position.x;
               config.y=position.y;
-              console.log(config);
               await postChartConfig(url,config)
             }
         } catch(error){console.log(error)}
       }
       postConfig(size, position)
 
-    },[size, position]);
+    },[moved, size, position]);
 
     useEffect( () => {
       const getConfig = async() => {
@@ -63,7 +62,6 @@ function CallsPerGroup() {
           setMoved(false);
           setPosition({x:data.x, y:data.y});
           setSize({width:data.width, height:data.height});
-          console.log(position, size);
         } catch(error){
           console.log(error);
         }
@@ -108,7 +106,7 @@ function CallsPerGroup() {
             {/* <Legend /> */}
             <Bar dataKey="opened" fill="#8884d8"  maxBarSize={15} >
             {data.map((entry, index) => (
-            <Cell fill={entry.opened > 40 ? '#ff0000' : '#8884d8' }/>
+            <Cell key= {index} fill={entry.opened > 40 ? '#ff0000' : '#8884d8' }/>
             ))}
             <LabelList dataKey="opened" position="inside" fill='#000000' />
             </Bar>

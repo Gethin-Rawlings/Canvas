@@ -1,21 +1,18 @@
-import React , { useState } from 'react';
+import React from 'react';
 import CallsPerGroup from './components/callsPerGroup';
 import CallsPerHour from './components/CallsPerHour';
 import CallsPerDay from './components/CallsPerDay';
+import Number from './components/Number';
 import './App.css';
 
-
-// const url = 'http://localhost:5000/chartConfig'
-
 function App() {
-  const [requestFailed, setRequestFailed] = useState(false)
-
   return (
     <div className = 'main'>
       <div className = 'chartArea'>
         <CallsPerDay />
         <CallsPerHour  />
         <CallsPerGroup />
+        <Number title='Calls Opend Today' value='60' name = 'openCallsTodayNumber' />
       </div> 
     </div>
   )

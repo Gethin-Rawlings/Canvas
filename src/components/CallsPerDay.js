@@ -1,6 +1,6 @@
 import React, { useEffect, useState }  from 'react';
 import {
-   XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, LabelList
+   XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, 
 
 } from 'recharts';
 import { Rnd } from 'react-rnd';
@@ -72,14 +72,13 @@ function CallsPerDay() {
               config.height=size.height;
               config.x=position.x;
               config.y=position.y;
-              console.log(config);
               await postChartConfig(url,config)
             }
         } catch(error){console.log(error)}
       }
       postConfig(size, position)
 
-    },[size, position]);
+    },[moved, size, position]);
 
     useEffect( () => {
       const getConfig = async() => {
@@ -88,7 +87,6 @@ function CallsPerDay() {
           setMoved(false);
           setPosition({x:data.x, y:data.y});
           setSize({width:data.width, height:data.height});
-          console.log(position, size);
         } catch(error){
           console.log(error);
         }
