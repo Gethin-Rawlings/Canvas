@@ -1,12 +1,10 @@
 import React, { useState, useEffect} from 'react';
 import { Rnd } from 'react-rnd';
-import '../App.css';
 
 import { postChartConfig ,getChartConfig } from './apiCalls';
 
-const url = 'http://localhost:5000/chartConfig'
-
 function Number(props) {
+  const url = props.config
   const [size, setSize ] = useState({ width: "500px", height: "250px"});
   const [position, setPosition] = useState({x:512, y: 262} );
   const [moved, setMoved] = useState(false);
@@ -26,7 +24,7 @@ function Number(props) {
     }
     postConfig(size, position)
 
-  },[moved, position, size, props.name]);
+  },[moved, position, size, props.name, url]);
 
   useEffect( () => {
     const getConfig = async() => {
@@ -40,7 +38,7 @@ function Number(props) {
       }
     }  
     getConfig();
-  },[props.name]);
+  },[props.name, url]);
 
    // useEffect( ()=>{
 //   const getData = async() =>  {

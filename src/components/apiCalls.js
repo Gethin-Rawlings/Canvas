@@ -25,7 +25,8 @@ export const postChartConfig = async(url,data) => {
 
 export const getChartConfig = async(url,chart) => {
     try{
-        const response = await fetch(url+'?chart='+chart)
+        // const response = await fetch(url+'?chart='+chart)
+        const response = await fetch(url+'?chart='+chart,{method: 'get',withCredentials: true,credentials: 'include'})
         if (Response.status >= 400) {
             throw( new Error('Network Request Failed'))
         } else {

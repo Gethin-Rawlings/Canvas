@@ -5,6 +5,11 @@
   min-height: 100vh;
 }
 
+body {
+  background-color: rgb(38, 42, 51);
+}
+
+
 .chartArea {
   display: grid;
   grid-template-columns: repeat(12,1fr);
@@ -43,4 +48,21 @@
   font-size: 50px;
   background-color: rgb(38, 42, 51);
     color: white;
+}
+
+.textWhite {
+  color: white !important;
+}
+
+.callsByUsersWeekly {
+    
+  grid-column-start: 1;
+  grid-column-end: 3;  
+  grid-row-start: 4;
+  background-color: rgb(38, 42, 51);
+  color: white;
+  width: 100%;
+  padding:5px;
+  font-size: 90%;
+  text-align: left;
 }

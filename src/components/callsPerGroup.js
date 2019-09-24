@@ -5,37 +5,15 @@ import {
 } from 'recharts';
 import { Rnd } from 'react-rnd';
 
-import { postChartConfig ,getChartConfig } from './apiCalls';
-const url = 'http://localhost:5000/chartConfig'
-const data = [
-    {
-      name: '1st line', opened: 58, closed: 2400, amt: 2400,
-    },
-    {
-      name: '2nd line', opened:8, closed: 1398, amt: 2210,
-    },
-    {
-      name: '3rd line', opened: 8, closed: 9800, amt: 2290,
-    },
-    {
-      name: 'info Sec', opened: 3, closed: 3908, amt: 2000,
-    },
-    {
-      name: 'Infra', opened: 6, closed: 4800, amt: 2181,
-    },
-    {
-      name: 'Apps', opened: 45, closed: 3800, amt: 2500,
-    },
-    {
-      name: 'NGD', opened: 37, closed: 4300, amt: 2100,
-    },
-  ];
+import { postChartConfig ,getChartConfig, getChartData } from './apiCalls';
 
-function CallsPerGroup() {
-
+function CallsPerGroup(props) {
+    const url = props.config
     const [size, setSize ] = useState({ width: "500px", height: "250px"});
     const [position, setPosition] = useState({x:0, y: 0} );
     const [moved, setMoved] = useState(false);
+    const [calls, setCalls] = useState([]);
+    const [requestFailed ,setRequestFailed] = useState(false);
 
     useEffect( ()=> {
       const postConfig = async(size, position) => {
@@ -53,7 +31,7 @@ function CallsPerGroup() {
       }
       postConfig(size, position)
 
-    },[moved, size, position]);
+    },[moved, size, position, url]);
 
     useEffect( () => {
       const getConfig = async() => {
@@ -67,18 +45,24 @@ function CallsPerGroup() {
         }
       }  
       getConfig();
-    },[]);
+    },[url]);
 
-     // useEffect( ()=>{
-  //   const getData = async() =>  {
-  //     try {
-  //       const data = await getChartData(props.url)
-  //       setCalls(data)
-  //     } catch (error) {setRequestFailed(true)
-  //     }
-  //   }
-  //   getData();
-  // })
+    useEffect( ()=> {
+      const getData = async() =>  {
+        try {
+          const data = await getChartData(props.url)
+          setCalls(data)
+        } catch (error) {setRequestFailed(true)
+        }
+      }
+        getData();
+        let interval = setInterval(getData, 30000);
+        return function cleanup() {
+            clearInterval(interval);
+        }
+    },[props.url])
+
+  if (requestFailed) return <p>Failed!</p>  
 
     return (
       <Rnd size={size} 
@@ -95,23 +79,19 @@ function CallsPerGroup() {
           <BarChart 
             width={490}
             height={500}
-            // layout={'horizontal'}
             layout={'vertical'}
-            data={data}
-            margin={{top: 15, right: 15, left: 15, bottom: 15,}}>
+            data={calls}
+            margin={{top: 20, right: 40, left: 40, bottom: 20,}}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number"/>
-            <YAxis dataKey="name" type="category"/>
-            <Tooltip />
-            {/* <Legend /> */}
-            <Bar dataKey="opened" fill="#8884d8"  maxBarSize={15} >
-            {data.map((entry, index) => (
-            <Cell key= {index} fill={entry.opened > 40 ? '#ff0000' : '#8884d8' }/>
+            <XAxis type="number" stroke="white"/>
+            <YAxis dataKey="assignedgroup" type="category" stroke="white"/>
+            <Tooltip className="textWhite"/>
+            <Bar dataKey="opened" fill="#8884d8"  maxBarSize={13} >
+            {calls.map((entry, index) => (
+                <Cell key= {index} fill={entry.opened > 50 ? 'red' : entry.opened < 10 ? 'green' : '#8884d8' }/>
             ))}
-            <LabelList dataKey="opened" position="inside" fill='#000000' />
+            <LabelList dataKey="opened" position="inside" stroke = 'white'  />
             </Bar>
-            {/* <Bar dataKey="closed" fill="#82ca9d" /> */}
-           
           </BarChart>
         </ResponsiveContainer>
         </Rnd>

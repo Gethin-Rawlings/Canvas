@@ -6,7 +6,7 @@ import {
 import { Rnd } from 'react-rnd';
 
 import { postChartConfig ,getChartConfig } from './apiCalls';
-const url = 'http://localhost:5000/chartConfig'
+
 const data = [
   {
     name: '09:00', opened: 12, closed: 2400, amt: 2400,
@@ -31,8 +31,8 @@ const data = [
   },
 ];
 
-function CallsPerHour() {
-
+function CallsPerHour(props) {
+    const url = props.config
     const [size, setSize ] = useState({ width: "500px", height: "250px"});
     const [position, setPosition] = useState({x:512, y: 262} );
     const [moved, setMoved] = useState(false);
@@ -53,7 +53,7 @@ function CallsPerHour() {
       }
       postConfig(size, position)
 
-    },[moved,size, position]);
+    },[moved,size, position, url]);
 
     useEffect( () => {
       const getConfig = async() => {
@@ -67,7 +67,7 @@ function CallsPerHour() {
         }
       }  
       getConfig();
-    },[]);
+    },[url]);
 
      // useEffect( ()=>{
   //   const getData = async() =>  {
@@ -94,12 +94,12 @@ function CallsPerHour() {
         <ResponsiveContainer aspect={2.0} className = 'chart2' >
           <BarChart 
             data={data}
-            margin={{top: 15, right: 15, left: 15, bottom: 15,}}>
-            <XAxis dataKey="name" type="category"/>
-            <YAxis type="number" />
+            margin={{top: 20, right: 40, left: 10, bottom: 20,}}>
+            <XAxis dataKey="name" type="category" stroke="white"/>
+            <YAxis type="number" stroke="white"/>
             <Tooltip />
-            <Bar dataKey="opened" fill="#ffff80" maxBarSize={15} >
-            <LabelList dataKey="opened" position="inside"  className='white'/>
+            <Bar dataKey="opened" fill="#8884d8" maxBarSize={15} >
+            <LabelList dataKey="opened" position="inside"  stroke = 'white' angle = {90}/>
             </Bar>
           </BarChart>
         </ResponsiveContainer>
